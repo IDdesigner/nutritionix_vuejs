@@ -4,6 +4,6 @@ $(function() {
     $(".dial").knob();
 });
 
-$('.dial')
-    .val(0)
-    .trigger('change');
+// $('.dial')
+//     .val(0)
+//     .trigger('change');

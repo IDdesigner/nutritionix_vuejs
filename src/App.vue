@@ -8,7 +8,7 @@
                 <input type="text" class="form-control" v-model="upc" placeholder="Enter a UPC code"/>
             </div>
             <button class="btn btn-primary" @click="fetchData">Get Data</button>
-            <br>
+            <br><br>
             <ul class="list-group">
               <li class="list-group-item">Protein: {{nutrition.nf_protein}}</li>
               <li class="list-group-item">Calories: {{nutrition.nf_calories}}</li>
@@ -17,10 +17,24 @@
               <li class="list-group-item">Sugar: {{nutrition.nf_sugars}}</li>
             </ul>
             <hr>
+            <div class="row">
+              <div class="small-6 columns">
+                <h3 class="text-center">Calories: {{updateValues}}</h3>
+                <div class="nutritionBar">
+                  <div
+                    class="nutritionBar text-center"
+                    style="background-color: lightgreen; margin: 0; color: white;"
+                    :style="{width: updateValues + '%'}"
+                  ></div>
+                </div>
+              </div>
+            </div>
+
+            <hr>  
             <div class="ac">
               <div class="acib">
                   <h3>Calories</h3>
-                  <input type="text" name="calories" class="dial" data-min="0" data-max="500" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250" data-readOnly="true" data-width="100" :value="updateValues" v-model="nutrition.nf_calories">
+                  <input type="text" name="calories" class="dial" data-min="0" data-max="500" data-fgColor="#66CC66" data-angleOffset="-125" data-angleArc="250" data-readOnly="true" data-width="100" :value="calorie_value" @input="calorie_value = updateValues">
               </div>
             </div>
         </div>
@@ -37,7 +51,8 @@
         nutrition: [],
         calorie_value: 0,
         ai: pw.APP_ID,
-        ak: pw.APP_KEY
+        ak: pw.APP_KEY,
+        dailyCalories: 20
       }
     },
     methods: {
@@ -51,21 +66,16 @@
           .then(data => {
             this.nutrition = data;
             console.log(this.nutrition);
+            this.calorie_value = this.nutrition.nf_calories;
           })
       }
     },
     computed: {
       updateValues() {
-        console.log('Computed');
-        // if (typeof this.nutrition.nf_calories != 'undefined') {
-        //   this.calorie_value = this.nutrition.nf_calories;
-        //   console.log(this.calorie_value)
-        // }
         if (typeof this.nutrition.nf_calories != 'undefined') {
-          $("[name='calories']").val(this.nutrition.nf_calories);
-          $("[name='calories']").trigger('change');
+          return this.calorie_value = this.nutrition.nf_calories;
         } else {
-          this.nutrition.nf_calories = 0;
+          return this.calorie_value = 0;
         }
       }
     }
