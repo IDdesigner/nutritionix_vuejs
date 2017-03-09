@@ -14,11 +14,14 @@
 
 <script>
   import pw from './passwords';
+  import { eventBus } from './main';
+
   export default {
     data () {
       return {
         upc: '',
         nutrition: [],
+        nutritionData: [],
         calorie_value: 0,
         ai: pw.APP_ID,
         ak: pw.APP_KEY
@@ -37,6 +40,7 @@
             console.log(this.nutrition);
             this.calorie_value = this.nutrition.nf_calories;
             this.$emit('isEntered', true);
+            this.$emit('dataChanged', this.nutrition);
           })
       }
     },
