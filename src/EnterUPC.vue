@@ -22,7 +22,6 @@
         upc: '',
         nutrition: [],
         nutritionData: [],
-        calorie_value: 0,
         ai: pw.APP_ID,
         ak: pw.APP_KEY
       }
@@ -42,15 +41,6 @@
             this.$emit('isEntered', true);
             this.$emit('dataChanged', this.nutrition);
           })
-      }
-    },
-    computed: {
-      updateValues() {
-        if (typeof this.nutrition.nf_calories != 'undefined') {
-          return this.calorie_value = this.nutrition.nf_calories;
-        } else {
-          return this.calorie_value = 0;
-        }
       }
     }
   }
